@@ -1,0 +1,19 @@
+{
+    "name": "bj/switch-user-bundle",
+    "description": "User impersonation plugin for Kimai - switch to another user's perspective",
+    "type": "kimai-plugin",
+    "version": "1.0.0",
+    "keywords": ["kimai", "kimai-plugin", "switch-user", "impersonate"],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "KimaiPlugin\\SwitchUserBundle\\": ""
+        }
+    },
+    "extra": {
+        "kimai": {
+            "require": 23200,
+            "name": "Switch User"
+        }
+    }
+}

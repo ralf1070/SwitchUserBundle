@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="messages.en.xlf">
+        <body>
+            <trans-unit id="switch_user">
+                <source>switch_user</source>
+                <target>Switch User</target>
+            </trans-unit>
+            <trans-unit id="switch_user.back_to">
+                <source>switch_user.back_to</source>
+                <target>Back to %name%</target>
+            </trans-unit>
+            <trans-unit id="switch_user.search">
+                <source>switch_user.search</source>
+                <target>Search...</target>
+            </trans-unit>
+            <trans-unit id="switch_user.username">
+                <source>switch_user.username</source>
+                <target>Username</target>
+            </trans-unit>
+            <trans-unit id="switch_user.display_name">
+                <source>switch_user.display_name</source>
+                <target>Display name</target>
+            </trans-unit>
+            <trans-unit id="switch_user.roles">
+                <source>switch_user.roles</source>
+                <target>Roles</target>
+            </trans-unit>
+            <trans-unit id="switch_user.switch">
+                <source>switch_user.switch</source>
+                <target>Switch</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,39 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    KimaiPlugin\SwitchUserBundle\:
+        resource: '../../*'
+        exclude:
+            - '../../Resources/'
+            - '../../Tests/'
+
+    KimaiPlugin\SwitchUserBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
+
+    # Inner listener: Symfony's SwitchUserListener (not tagged — not called directly)
+    switch_user.listener.inner:
+        class: Symfony\Component\Security\Http\Firewall\SwitchUserListener
+        arguments:
+            $tokenStorage: '@security.token_storage'
+            $provider: '@security.user.provider.concrete.chain_provider'
+            $userChecker: '@App\Security\UserChecker'
+            $firewallName: 'secured_area'
+            $accessDecisionManager: '@security.access.decision_manager'
+            $logger: '@?logger'
+            $usernameParameter: '_switch_user'
+            $role: 'ROLE_SUPER_ADMIN'
+            $dispatcher: '@event_dispatcher'
+            $stateless: false
+            $urlGenerator: '@router'
+            $targetRoute: null
+
+    # Wrapper: only delegates to SwitchUserListener for web requests (not /api)
+    KimaiPlugin\SwitchUserBundle\EventSubscriber\SwitchUserRequestListener:
+        arguments:
+            $inner: '@switch_user.listener.inner'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, priority: 7 }

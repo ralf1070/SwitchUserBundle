@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block main %}
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">{{ 'switch_user'|trans }}</div>
+            <div class="card-actions">
+                <div class="input-icon">
+                    <span class="input-icon-addon"><i class="fas fa-search"></i></span>
+                    <input type="text" id="switch-user-filter" class="form-control" placeholder="{{ 'switch_user.search'|trans }}" autocomplete="off">
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-vcenter card-table" id="switch-user-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>{{ 'switch_user.username'|trans }}</th>
+                        <th>{{ 'switch_user.display_name'|trans }}</th>
+                        <th>{{ 'switch_user.roles'|trans }}</th>
+                        <th class="text-end"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        {% if user.id != currentUser.id %}
+                            <tr class="switch-user-row">
+                                <td class="w-1">{{ widgets.user_avatar(user, false) }}</td>
+                                <td>{{ user.userIdentifier }}</td>
+                                <td>{{ user.displayName }}</td>
+                                <td>
+                                    {% set showUserRole = user.roles|length == 1 %}
+                                    {% for role in user.roles %}
+                                        {% if showUserRole or role != 'ROLE_USER' %}
+                                            {{ widgets.label_role(role) }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td class="text-end">
+                                    <a href="{{ path('homepage', {'_switch_user': user.userIdentifier}) }}" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-exchange-alt me-1"></i> {{ 'switch_user.switch'|trans }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filter = document.getElementById('switch-user-filter');
+            const rows = document.querySelectorAll('.switch-user-row');
+
+            filter.addEventListener('input', function() {
+                const term = this.value.toLowerCase();
+                rows.forEach(function(row) {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(term) ? '' : 'none';
+                });
+            });
+        });
+    </script>
+{% endblock %}
